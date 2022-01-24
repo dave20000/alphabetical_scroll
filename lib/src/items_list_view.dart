@@ -15,9 +15,9 @@ class ItemsListView<T> extends StatefulWidget {
   final double contactItemHeight;
   final AlphabetViewItemBuilder<T> itemBuilder;
   final TextStyle headerTextStyle;
-  // final void Function<T>(T item)? onTap;
   final AlphabetItemOnTap<T>? onTap;
   final bool hasBorder;
+  final bool isHeaderShown;
   const ItemsListView({
     Key? key,
     required this.listScrollController,
@@ -28,6 +28,7 @@ class ItemsListView<T> extends StatefulWidget {
     required this.headerTextStyle,
     this.onTap,
     required this.hasBorder,
+    required this.isHeaderShown,
   }) : super(key: key);
 
   @override
@@ -46,11 +47,14 @@ class _ItemsListViewState<T> extends State<ItemsListView<T>> {
             overlapsContent: true,
             header: Align(
               alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 14.0),
-                child: Text(
-                  entry.key,
-                  style: widget.headerTextStyle,
+              child: Visibility(
+                visible: widget.isHeaderShown,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 14.0),
+                  child: Text(
+                    entry.key,
+                    style: widget.headerTextStyle,
+                  ),
                 ),
               ),
             ),

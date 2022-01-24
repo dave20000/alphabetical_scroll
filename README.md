@@ -1,39 +1,57 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+A Flutter package to acheive alphabet scrolling. Based on flutter_sticky_header.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
+Add this to your flutter app to:
+1. Have alphabet stacked scroll bar.
+2. Scrolling with list view header alphabet persistent to stacked scroll bar alphabet.
+3. Call on tap function on list view item tapped
+4. Support easy creation of the contacts or countries app list view interface
+5. Support custom header
+6. Support styling stacked alphabet scrollbar
+7. Support custom widget for list view item
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Add the package to your pubspec.yaml:
+
+```
+alphabetical_scroll:
+```
+
+In your dart file, import the library:
+
+```
+import 'package:grouped_list/grouped_list.dart';
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+Firstly,you can have list of data items:
 
 ```dart
-const like = 'sample';
+List<String> contacts = ["Jessica Jones","Rob Stark","Tom Holland",];
 ```
 
-## Additional information
+After that, you can get the required dependencies from pub.dev and use the below code in your project like this
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+```dart
+body: AlphabetListScreen<String>(
+    itemBuilder: (context, name) {
+        return ListTile(
+            leading: CircleAvatar(
+                backgroundColor: Colors.blue,
+                child: Text(
+                    name name,
+                    style: const TextStyle(color: Colors.white,),
+                ),
+            ),
+            title: Text(name ?? ""),
+        );
+    },
+    sources: contacts,
+    soruceFilterItemList: contacts,
+    onTap: (item) {
+        print("pressed ${item.id} do something");
+    },
+),
+```

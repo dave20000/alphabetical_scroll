@@ -11,8 +11,6 @@ extension StringExtension on String {
 }
 
 class AlphabetListScreen<T> extends StatefulWidget {
-  final StickyHeaderController stickyHeaderController;
-  final ScrollController listScrollController;
   final List<T> sources;
   final List<String> soruceFilterItemList;
   final double contactItemHeight;
@@ -31,13 +29,11 @@ class AlphabetListScreen<T> extends StatefulWidget {
   final TextStyle unSelectedAlphabetTextStyle;
 
   final bool hasBorder;
+  final bool isHeaderShown;
 
-  // final void Function<T>(T item)? onTap;
   final AlphabetItemOnTap<T>? onTap;
   const AlphabetListScreen({
     Key? key,
-    required this.stickyHeaderController,
-    required this.listScrollController,
     required this.sources,
     required this.soruceFilterItemList,
     this.contactItemHeight = 56.0,
@@ -72,6 +68,7 @@ class AlphabetListScreen<T> extends StatefulWidget {
       color: Colors.black,
     ),
     this.hasBorder = false,
+    this.isHeaderShown = true,
   }) : super(key: key);
 
   @override
@@ -117,8 +114,8 @@ class _AlphabetListScreenState<T> extends State<AlphabetListScreen<T>> {
 
   @override
   void initState() {
-    listScrollController = widget.listScrollController;
-    stickyHeaderController = widget.stickyHeaderController;
+    listScrollController = ScrollController();
+    stickyHeaderController = StickyHeaderController();
     alphabetListMap = {
       'A': [],
       'B': [],
@@ -178,8 +175,6 @@ class _AlphabetListScreenState<T> extends State<AlphabetListScreen<T>> {
             selectedAlphabet = mapVal.key;
           });
         });
-      } else {
-        print("no header found with current scroll offset value");
       }
     });
     super.initState();
@@ -187,71 +182,58 @@ class _AlphabetListScreenState<T> extends State<AlphabetListScreen<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.black,
+    return Stack(
+      children: [
+        Padding(
+          padding: widget.contactListPadding,
+          child: ItemsListView<T>(
+            onTap: (T hello) {
+              widget.onTap!(hello);
+            },
+            itemBuilder: widget.itemBuilder,
+            listScrollController: listScrollController,
+            stickyHeaderController: stickyHeaderController,
+            alphabetListMap: alphabetListMap,
+            contactItemHeight: widget.contactItemHeight,
+            headerTextStyle: widget.headerTextStyle,
+            hasBorder: widget.hasBorder,
+            isHeaderShown: widget.isHeaderShown,
+          ),
         ),
-        backgroundColor: const Color(0xFFEDEDED),
-        title: const Text(
-          'Contacts',
-          style: TextStyle(color: Color(0xFF171717)),
-        ),
-      ),
-      body: Stack(
-        children: [
-          Padding(
-            padding: widget.contactListPadding,
-            child: ItemsListView<T>(
-              onTap: (T hello) {
-                widget.onTap!(hello);
-              },
-              itemBuilder: widget.itemBuilder,
-              listScrollController: listScrollController,
-              stickyHeaderController: stickyHeaderController,
+        Align(
+          alignment: Alignment.centerRight,
+          child: Padding(
+            padding: widget.sideAlphabetBarPadding,
+            child: StackedSideAlphabetBar<T>(
               alphabetListMap: alphabetListMap,
-              contactItemHeight: widget.contactItemHeight,
-              headerTextStyle: widget.headerTextStyle,
-              hasBorder: widget.hasBorder,
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: widget.sideAlphabetBarPadding,
-              child: StackedSideAlphabetBar<T>(
-                alphabetListMap: alphabetListMap,
-                selectedAlphabet: selectedAlphabet,
-                updateSelectedAlphabet: (newVal) async {
-                  setState(() {
-                    selectedAlphabet = newVal;
-                  });
-                  int itemLengthToJump = 0;
-                  for (var entry in alphabetListMap.entries) {
-                    if (entry.key == selectedAlphabet) {
-                      listScrollController.jumpTo(
-                        widget.contactItemHeight * itemLengthToJump,
-                      );
-                      break;
-                    } else {
-                      itemLengthToJump += entry.value.length;
-                    }
+              selectedAlphabet: selectedAlphabet,
+              updateSelectedAlphabet: (newVal) async {
+                setState(() {
+                  selectedAlphabet = newVal;
+                });
+                int itemLengthToJump = 0;
+                for (var entry in alphabetListMap.entries) {
+                  if (entry.key == selectedAlphabet) {
+                    listScrollController.jumpTo(
+                      widget.contactItemHeight * itemLengthToJump,
+                    );
+                    break;
+                  } else {
+                    itemLengthToJump += entry.value.length;
                   }
-                },
-                alphabetBarItemHeight: widget.alphabetBarItemHeight,
-                alphabetBarSelectedItemColor:
-                    widget.alphabetBarSelectedItemColor,
-                alphabetBarMargin: widget.alphabetBarMargin,
-                alphbaetBarWidth: widget.alphbaetBarWidth,
-                isBorderedAlphabetBar: widget.isBorderedAlphabetBar,
-                selectedAlphabetTextStyle: widget.selectedAlphabetTextStyle,
-                unSelectedAlphabetTextStyle: widget.unSelectedAlphabetTextStyle,
-              ),
+                }
+              },
+              alphabetBarItemHeight: widget.alphabetBarItemHeight,
+              alphabetBarSelectedItemColor: widget.alphabetBarSelectedItemColor,
+              alphabetBarMargin: widget.alphabetBarMargin,
+              alphbaetBarWidth: widget.alphbaetBarWidth,
+              isBorderedAlphabetBar: widget.isBorderedAlphabetBar,
+              selectedAlphabetTextStyle: widget.selectedAlphabetTextStyle,
+              unSelectedAlphabetTextStyle: widget.unSelectedAlphabetTextStyle,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
