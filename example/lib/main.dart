@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:alphabetical_scroll/alphabetical_scroll.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
@@ -74,9 +76,9 @@ class _MyAppState extends State<MyApp> {
             );
           },
           sources: contacts,
-          soruceFilterItemList: contacts.map((e) => e.name).toList(),
+          sourceFilterItemList: contacts.map((e) => e.name).toList(),
           onTap: (item) {
-            print("pressed ${item.id} do something");
+            log("pressed ${item.id} do something");
           },
         ),
       ),

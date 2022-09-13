@@ -6,13 +6,13 @@ import 'package:alphabetical_scroll/alphabetical_scroll.dart';
 
 extension StringExtension on String {
   String capitalize() {
-    return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
   }
 }
 
 class AlphabetListScreen<T> extends StatefulWidget {
   final List<T> sources;
-  final List<String> soruceFilterItemList;
+  final List<String> sourceFilterItemList;
   final double contactItemHeight;
   final AlphabetViewItemBuilder<T> itemBuilder;
   final TextStyle headerTextStyle;
@@ -22,7 +22,7 @@ class AlphabetListScreen<T> extends StatefulWidget {
   final double alphabetBarItemHeight;
   final Color alphabetBarSelectedItemColor;
   final bool isBorderedAlphabetBar;
-  final double alphbaetBarWidth;
+  final double alphabetBarWidth;
   final EdgeInsetsGeometry alphabetBarMargin;
 
   final TextStyle selectedAlphabetTextStyle;
@@ -35,7 +35,7 @@ class AlphabetListScreen<T> extends StatefulWidget {
   const AlphabetListScreen({
     Key? key,
     required this.sources,
-    required this.soruceFilterItemList,
+    required this.sourceFilterItemList,
     this.contactItemHeight = 56.0,
     required this.itemBuilder,
     this.onTap,
@@ -55,7 +55,7 @@ class AlphabetListScreen<T> extends StatefulWidget {
     this.alphabetBarItemHeight = 16.0,
     this.alphabetBarSelectedItemColor = Colors.blue,
     this.isBorderedAlphabetBar = true,
-    this.alphbaetBarWidth = 24,
+    this.alphabetBarWidth = 24,
     this.alphabetBarMargin = const EdgeInsets.symmetric(horizontal: 2),
     this.selectedAlphabetTextStyle = const TextStyle(
       fontSize: 14,
@@ -72,7 +72,7 @@ class AlphabetListScreen<T> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AlphabetListScreenState<T> createState() => _AlphabetListScreenState<T>();
+  State<AlphabetListScreen<T>> createState() => _AlphabetListScreenState<T>();
 }
 
 class _AlphabetListScreenState<T> extends State<AlphabetListScreen<T>> {
@@ -147,8 +147,8 @@ class _AlphabetListScreenState<T> extends State<AlphabetListScreen<T>> {
     };
 
     for (int index = 0; index < widget.sources.length; index++) {
-      if (widget.soruceFilterItemList[index].startsWith(RegExp(r'[A-Za-z]'))) {
-        alphabetListMap[widget.soruceFilterItemList[index][0].capitalize()]!
+      if (widget.sourceFilterItemList[index].startsWith(RegExp(r'[A-Za-z]'))) {
+        alphabetListMap[widget.sourceFilterItemList[index][0].capitalize()]!
             .add(widget.sources[index]);
       } else {
         alphabetListMap['#']!.add(widget.sources[index]);
@@ -170,7 +170,7 @@ class _AlphabetListScreenState<T> extends State<AlphabetListScreen<T>> {
         var mapVal = alphabetListScrollOffsetMap.entries.lastWhere((element) =>
             element.value == stickyHeaderController.stickyHeaderScrollOffset);
 
-        SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
+        SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
           setState(() {
             selectedAlphabet = mapVal.key;
           });
@@ -226,7 +226,7 @@ class _AlphabetListScreenState<T> extends State<AlphabetListScreen<T>> {
               alphabetBarItemHeight: widget.alphabetBarItemHeight,
               alphabetBarSelectedItemColor: widget.alphabetBarSelectedItemColor,
               alphabetBarMargin: widget.alphabetBarMargin,
-              alphbaetBarWidth: widget.alphbaetBarWidth,
+              alphabetBarWidth: widget.alphabetBarWidth,
               isBorderedAlphabetBar: widget.isBorderedAlphabetBar,
               selectedAlphabetTextStyle: widget.selectedAlphabetTextStyle,
               unSelectedAlphabetTextStyle: widget.unSelectedAlphabetTextStyle,

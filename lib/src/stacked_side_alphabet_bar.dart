@@ -4,13 +4,11 @@ class StackedSideAlphabetBar<T> extends StatefulWidget {
   final Map<String, List<T>> alphabetListMap;
   final String selectedAlphabet;
   final void Function(String newVal) updateSelectedAlphabet;
-
   final double alphabetBarItemHeight;
   final Color alphabetBarSelectedItemColor;
   final bool isBorderedAlphabetBar;
-  final double alphbaetBarWidth;
+  final double alphabetBarWidth;
   final EdgeInsetsGeometry alphabetBarMargin;
-
   final TextStyle selectedAlphabetTextStyle;
   final TextStyle unSelectedAlphabetTextStyle;
 
@@ -22,14 +20,14 @@ class StackedSideAlphabetBar<T> extends StatefulWidget {
     required this.alphabetBarItemHeight,
     required this.alphabetBarSelectedItemColor,
     required this.isBorderedAlphabetBar,
-    required this.alphbaetBarWidth,
+    required this.alphabetBarWidth,
     required this.alphabetBarMargin,
     required this.selectedAlphabetTextStyle,
     required this.unSelectedAlphabetTextStyle,
   }) : super(key: key);
 
   @override
-  _StackedSideAlphabetBarState createState() => _StackedSideAlphabetBarState();
+  State<StackedSideAlphabetBar> createState() => _StackedSideAlphabetBarState();
 }
 
 class _StackedSideAlphabetBarState extends State<StackedSideAlphabetBar> {
@@ -83,7 +81,7 @@ class _StackedSideAlphabetBarState extends State<StackedSideAlphabetBar> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
       margin: widget.alphabetBarMargin,
-      width: widget.alphbaetBarWidth,
+      width: widget.alphabetBarWidth,
       decoration: BoxDecoration(
         border: widget.isBorderedAlphabetBar
             ? Border.all(
@@ -165,7 +163,7 @@ class _StackedSideAlphabetBarState extends State<StackedSideAlphabetBar> {
               return Positioned(
                 left: MediaQuery.of(context).size.width -
                     48 -
-                    widget.alphbaetBarWidth -
+                    widget.alphabetBarWidth -
                     widget.alphabetBarMargin.horizontal,
                 top: alphabetOffsetValueNotifer.value.dy - 16,
                 child: Material(

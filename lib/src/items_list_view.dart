@@ -32,7 +32,7 @@ class ItemsListView<T> extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ItemsListViewState<T> createState() => _ItemsListViewState<T>();
+  State<ItemsListView<T>> createState() => _ItemsListViewState<T>();
 }
 
 class _ItemsListViewState<T> extends State<ItemsListView<T>> {
