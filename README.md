@@ -23,7 +23,7 @@ alphabetical_scroll:
 In your dart file, import the library:
 
 ```dart
-import 'package:grouped_list/grouped_list.dart';
+import 'package:alphabetical_scroll/alphabetical_scroll.dart';
 ```
 
 ## Usage
