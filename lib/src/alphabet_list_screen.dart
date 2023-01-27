@@ -18,6 +18,7 @@ class AlphabetListScreen<T> extends StatefulWidget {
   final TextStyle headerTextStyle;
   final EdgeInsetsGeometry contactListPadding;
   final EdgeInsetsGeometry sideAlphabetBarPadding;
+  final ScrollController listScrollController;
 
   final double alphabetBarItemHeight;
   final Color alphabetBarSelectedItemColor;
@@ -52,6 +53,7 @@ class AlphabetListScreen<T> extends StatefulWidget {
     this.sideAlphabetBarPadding = const EdgeInsets.only(
       top: 16.0,
     ),
+    required this.listScrollController,
     this.alphabetBarItemHeight = 16.0,
     this.alphabetBarSelectedItemColor = Colors.blue,
     this.isBorderedAlphabetBar = true,
