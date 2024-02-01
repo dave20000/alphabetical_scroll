@@ -18,6 +18,7 @@ class AlphabetListScreen<T> extends StatefulWidget {
   final TextStyle headerTextStyle;
   final EdgeInsetsGeometry contactListPadding;
   final EdgeInsetsGeometry sideAlphabetBarPadding;
+  final ScrollController listScrollController;
 
   final double alphabetBarItemHeight;
   final Color alphabetBarSelectedItemColor;
@@ -52,6 +53,7 @@ class AlphabetListScreen<T> extends StatefulWidget {
     this.sideAlphabetBarPadding = const EdgeInsets.only(
       top: 16.0,
     ),
+    required this.listScrollController,
     this.alphabetBarItemHeight = 16.0,
     this.alphabetBarSelectedItemColor = Colors.blue,
     this.isBorderedAlphabetBar = true,
@@ -77,7 +79,6 @@ class AlphabetListScreen<T> extends StatefulWidget {
 
 class _AlphabetListScreenState<T> extends State<AlphabetListScreen<T>> {
   late StickyHeaderController stickyHeaderController;
-  late ScrollController listScrollController;
 
   late String selectedAlphabet;
   late Map<String, List<T>> alphabetListMap;
@@ -114,7 +115,6 @@ class _AlphabetListScreenState<T> extends State<AlphabetListScreen<T>> {
 
   @override
   void initState() {
-    listScrollController = ScrollController();
     stickyHeaderController = StickyHeaderController();
     alphabetListMap = {
       'A': [],
@@ -191,7 +191,7 @@ class _AlphabetListScreenState<T> extends State<AlphabetListScreen<T>> {
               widget.onTap!(hello);
             },
             itemBuilder: widget.itemBuilder,
-            listScrollController: listScrollController,
+            listScrollController: widget.listScrollController,
             stickyHeaderController: stickyHeaderController,
             alphabetListMap: alphabetListMap,
             contactItemHeight: widget.contactItemHeight,
@@ -214,7 +214,7 @@ class _AlphabetListScreenState<T> extends State<AlphabetListScreen<T>> {
                 int itemLengthToJump = 0;
                 for (var entry in alphabetListMap.entries) {
                   if (entry.key == selectedAlphabet) {
-                    listScrollController.jumpTo(
+                    widget.listScrollController.jumpTo(
                       widget.contactItemHeight * itemLengthToJump,
                     );
                     break;

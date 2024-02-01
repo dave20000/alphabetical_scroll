@@ -21,6 +21,8 @@ class _MyAppState extends State<MyApp> {
 
   List<ContactInfo> contactList = [];
 
+  ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -75,6 +77,7 @@ class _MyAppState extends State<MyApp> {
               name: contactInfo.name,
             );
           },
+          listScrollController: scrollController,
           sources: contacts,
           sourceFilterItemList: contacts.map((e) => e.name).toList(),
           onTap: (item) {
