@@ -13,7 +13,7 @@ class StackedSideAlphabetBar<T> extends StatefulWidget {
   final TextStyle unSelectedAlphabetTextStyle;
 
   const StackedSideAlphabetBar({
-    Key? key,
+    super.key,
     required this.alphabetListMap,
     required this.selectedAlphabet,
     required this.updateSelectedAlphabet,
@@ -24,7 +24,7 @@ class StackedSideAlphabetBar<T> extends StatefulWidget {
     required this.alphabetBarMargin,
     required this.selectedAlphabetTextStyle,
     required this.unSelectedAlphabetTextStyle,
-  }) : super(key: key);
+  });
 
   @override
   State<StackedSideAlphabetBar> createState() => _StackedSideAlphabetBarState();
@@ -60,7 +60,7 @@ class _StackedSideAlphabetBarState extends State<StackedSideAlphabetBar> {
     'Z': 0,
     '#': 0,
   };
-  late ValueNotifier<Offset> alphabetOffsetValueNotifer;
+  late ValueNotifier<Offset> alphabetOffsetValueNotifier;
   @override
   void initState() {
     int index = 0;
@@ -69,8 +69,8 @@ class _StackedSideAlphabetBarState extends State<StackedSideAlphabetBar> {
           widget.alphabetBarItemHeight * index;
       index++;
     }
-    alphabetOffsetValueNotifer = ValueNotifier(const Offset(0.0, 0.0));
-    alphabetOffsetValueNotifer.addListener(() {
+    alphabetOffsetValueNotifier = ValueNotifier(const Offset(0.0, 0.0));
+    alphabetOffsetValueNotifier.addListener(() {
       _addOverlay(context);
     });
     super.initState();
@@ -97,7 +97,7 @@ class _StackedSideAlphabetBarState extends State<StackedSideAlphabetBar> {
           _removeOverlay();
         },
         onVerticalDragStart: (DragStartDetails dragStartDetails) {
-          alphabetOffsetValueNotifer.value = dragStartDetails.globalPosition;
+          alphabetOffsetValueNotifier.value = dragStartDetails.globalPosition;
         },
         onVerticalDragUpdate: (DragUpdateDetails dragUpdateDetails) {
           if (!(dragUpdateDetails.localPosition.dy <
@@ -112,7 +112,8 @@ class _StackedSideAlphabetBarState extends State<StackedSideAlphabetBar> {
                       element.value - dragUpdateDetails.localPosition.dy < 0)
                   .key,
             );
-            alphabetOffsetValueNotifer.value = dragUpdateDetails.globalPosition;
+            alphabetOffsetValueNotifier.value =
+                dragUpdateDetails.globalPosition;
           }
         },
         child: Column(
@@ -153,19 +154,18 @@ class _StackedSideAlphabetBarState extends State<StackedSideAlphabetBar> {
 
   void _addOverlay(BuildContext context) {
     OverlayState? overlayState = Overlay.of(context);
-    if (overlayState == null) return;
     if (overlayEntry == null) {
       overlayEntry = OverlayEntry(
         builder: (BuildContext ctx) {
           return ValueListenableBuilder(
-            valueListenable: alphabetOffsetValueNotifer,
+            valueListenable: alphabetOffsetValueNotifier,
             builder: (context, _, __) {
               return Positioned(
                 left: MediaQuery.of(context).size.width -
                     48 -
                     widget.alphabetBarWidth -
                     widget.alphabetBarMargin.horizontal,
-                top: alphabetOffsetValueNotifer.value.dy - 16,
+                top: alphabetOffsetValueNotifier.value.dy - 16,
                 child: Material(
                   color: Colors.transparent,
                   child: AnimatedContainer(

@@ -1,8 +1,7 @@
+import 'package:alphabetical_scroll/alphabetical_scroll.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
-
-import 'package:alphabetical_scroll/alphabetical_scroll.dart';
 
 extension StringExtension on String {
   String capitalize() {
@@ -34,7 +33,7 @@ class AlphabetListScreen<T> extends StatefulWidget {
 
   final AlphabetItemOnTap<T>? onTap;
   const AlphabetListScreen({
-    Key? key,
+    super.key,
     required this.sources,
     required this.sourceFilterItemList,
     this.contactItemHeight = 56.0,
@@ -71,7 +70,7 @@ class AlphabetListScreen<T> extends StatefulWidget {
     ),
     this.hasBorder = false,
     this.isHeaderShown = true,
-  }) : super(key: key);
+  });
 
   @override
   State<AlphabetListScreen<T>> createState() => _AlphabetListScreenState<T>();

@@ -19,7 +19,7 @@ class ItemsListView<T> extends StatefulWidget {
   final bool hasBorder;
   final bool isHeaderShown;
   const ItemsListView({
-    Key? key,
+    super.key,
     required this.listScrollController,
     required this.stickyHeaderController,
     required this.alphabetListMap,
@@ -29,7 +29,7 @@ class ItemsListView<T> extends StatefulWidget {
     this.onTap,
     required this.hasBorder,
     required this.isHeaderShown,
-  }) : super(key: key);
+  });
 
   @override
   State<ItemsListView<T>> createState() => _ItemsListViewState<T>();
